@@ -62,9 +62,6 @@ typings/
 # Output of 'npm pack'
 *.tgz
 
-# Yarn Integrity file
-.yarn-integrity
-
 # dotenv environment variables file
 .env
 .env.test
@@ -98,8 +95,4 @@ public
 .tern-port
 .vscode/settings.json
 
-# docs
-docs/
 
-#secrets
-auth/secrets.js
