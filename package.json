@@ -1,0 +1,43 @@
+{
+  "name": "back-end",
+  "version": "1.0.0",
+  "description": "Back end for Spotify Song Suggester",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "server": "nodemon index.js",
+    "start": "node index.js",
+    "test": "cross-env DB_ENV=testing jest --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BuildWeek-Spotify-Song-Selector/back-end.git"
+  },
+  "author": "Austin Burton",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BuildWeek-Spotify-Song-Selector/back-end/issues"
+  },
+  "homepage": "https://github.com/BuildWeek-Spotify-Song-Selector/back-end#readme",
+  "devDependencies": {
+    "cross-env": "^7.0.2",
+    "jest": "^26.0.1",
+    "nodemon": "^2.0.4",
+    "supertest": "^4.0.2"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "helmet": "^3.23.1",
+    "heroku": "^7.42.1",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.21.1",
+    "pg": "^8.2.1",
+    "sqlite3": "^4.2.0"
+  }
+}
