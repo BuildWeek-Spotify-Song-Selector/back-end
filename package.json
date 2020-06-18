@@ -2,6 +2,9 @@
   "name": "back-end",
   "version": "1.0.0",
   "description": "Back end for Spotify Song Suggester",
+  "engines": {
+    "node": "12.7.0"
+  },
   "main": "index.js",
   "directories": {
     "doc": "docs"
