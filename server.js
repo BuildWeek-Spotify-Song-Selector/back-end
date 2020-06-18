@@ -14,6 +14,13 @@ server.use(helmet());
 // server.use("/user", accountsRouter);
 // server.use("/songs", musicRouter);
 
-server.use("/", express.static("./index.html"));
+server.use("/", logger, express.static(__dirname + "/documentation"));
+
+function logger(req, res, next) {
+  const today = new Date().toISOString(); // YYYY-MM-DD
+  console.log(`[${today}] ${req.method} to ${req.originalUrl}`);
+
+  next();
+}
 
 module.exports = server;
