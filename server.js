@@ -11,10 +11,10 @@ server.use(express.json());
 server.use(cors());
 server.use(helmet());
 
-server.use("/user", logger, userRouter);
-server.use("/songs", songsRouter);
-
 server.use("/", logger, express.static(__dirname + "/documentation"));
+
+server.use("/api/user", logger, userRouter);
+server.use("/api/songs", logger, songsRouter);
 
 function logger(req, res, next) {
   const today = new Date().toISOString(); // YYYY-MM-DD
