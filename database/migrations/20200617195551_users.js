@@ -1,16 +1,17 @@
 exports.up = function (knex) {
   return knex.schema
-    .createTable("users", (account) => {
-      account.increments();
-      account.string("name").notNullable();
-      account.string("email").notNullable().unique();
-      account.string("password").notNullable();
+    .createTable("users", (user) => {
+      user.increments();
+      user.string("name").notNullable();
+      user.string("email").notNullable().unique();
+      user.string("password").notNullable();
     })
     .createTable("songs", (tbl) => {
       tbl.increments();
       tbl.string("track_id").notNullable();
       tbl.string("track_name").notNullable();
       tbl.string("artist_name").notNullable();
+      tbl.string("genre").notNullable();
       tbl.decimal("acousticness", 10);
       tbl.decimal("danceability", 10);
       tbl.decimal("duration_ms", 10);
@@ -28,25 +29,26 @@ exports.up = function (knex) {
     })
     .createTable("user_songs", (tbl) => {
       tbl
-        .integer("account_id")
+        .integer("user_id")
         .unsigned()
         .references("id")
-        .inTable("accounts")
+        .inTable("users")
         .onUpdate("cascade")
         .onDelete("cascade");
       tbl
-        .integer("song_id")
+        .string("track_id")
         .references("id")
-        .inTable("music")
+        .inTable("songs")
         .onUpdate("cascade")
         .onDelete("cascade");
-      tbl.string("real_track_id").notNullable();
+      tbl.string("track_name").notNullable();
+      tbl.string("artist_name").notNullable();
     });
 };
 
 exports.down = function (knex) {
   return knex.schema
-    .dropTableIfExists("account_to_music")
-    .dropTableIfExists("music")
-    .dropTableIfExists("accounts");
+    .dropTableIfExists("user_songs")
+    .dropTableIfExists("songs")
+    .dropTableIfExists("users");
 };
