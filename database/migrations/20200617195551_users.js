@@ -36,13 +36,14 @@ exports.up = function (knex) {
         .onUpdate("cascade")
         .onDelete("cascade");
       tbl
-        .string("track_id")
+        .string("song_id")
         .references("id")
         .inTable("songs")
         .onUpdate("cascade")
         .onDelete("cascade");
-      tbl.string("track_name").notNullable();
-      tbl.string("artist_name").notNullable();
+      tbl.string("track_id").notNullable();
+      tbl.string("track_name");
+      tbl.string("artist_name");
     });
 };
 

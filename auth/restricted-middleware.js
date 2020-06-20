@@ -13,7 +13,7 @@ function restricted(req, res, next) {
         res.status(401).json({ message: "Incorrect Token... " });
         console.log(err);
       } else {
-        req.account = { id: decodedToken.id, email: decodedToken.email };
+        req.user = { id: decodedToken.id, email: decodedToken.email };
         next();
       }
     });

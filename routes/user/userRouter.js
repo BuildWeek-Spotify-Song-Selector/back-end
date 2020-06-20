@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const { restricted } = require("../../auth/restricted-middleware");
 const db = require("./userModel.js");
 
-// /user/register
+// register
 router.post("/register", validateUser, (req, res, logger) => {
   let user = req.body;
   user.password = bcrypt.hashSync(user.password, 10);
@@ -22,7 +22,7 @@ router.post("/register", validateUser, (req, res, logger) => {
       res.status(500).json({ error: err });
     });
 });
-// /user/login
+// login
 router.post("/login", validateUser, (req, res) => {
   const { email, password } = req.body;
   db.findByEmail({ email })
@@ -44,6 +44,7 @@ router.post("/login", validateUser, (req, res) => {
     });
 });
 
+// middlewares
 function validateUser(request, response, next) {
   if (!request.body.email) {
     response.status(404).json({ message: "!: Email missing from body" });
