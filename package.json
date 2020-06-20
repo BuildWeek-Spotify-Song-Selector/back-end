@@ -6,12 +6,9 @@
     "node": "12.7.0"
   },
   "main": "index.js",
-  "directories": {
-    "doc": "docs"
-  },
   "scripts": {
     "server": "nodemon index.js",
-    "start": "node index.js",
+    "start": "NODE_ENV=production node index.js",
     "test": "cross-env DB_ENV=testing jest --watch"
   },
   "repository": {

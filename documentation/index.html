@@ -200,38 +200,26 @@
       <li>API KEY:</li>
       <li>OAuth AuthorizationUrl:</li>
     </ol> -->
-    <h4><p>USER ENDPOINTS:</p></h4>
+    <h4><p>USER ENDPOINTS - /api/user/</p></h4>
     <ul>
       <li>
         <a href="#createUser"
-          ><code><span class="http-method">post</span> /register</code></a
+          ><code><span class="http-method">post</span> - /register</code></a
         >
       </li>
       <li>
         <a href="#loginUser"
-          ><code><span class="http-method">post</span> /login</code></a
-        >
-      </li>
-      <li>
-        <a href="#getSongs"
-          ><code><span class="http-method">get</span> /user/:id/songs</code></a
-        >
-      </li>
-      <li>
-        <a href="#delSong"
-          ><code
-            ><span class="http-method">delete</span> /user/:id/delsong/:id</code
-          ></a
+          ><code><span class="http-method">post</span> - /login</code></a
         >
       </li>
       <li>
         <a href="#getUserByName"
-          ><code><span class="http-method">put</span> /user/:id</code></a
+          ><code><span class="http-method">put</span> - /:id</code></a
         >
       </li>
       <li>
         <a href="#deleteUser"
-          ><code><span class="http-method">delete</span> /user/:id</code></a
+          ><code><span class="http-method">delete</span> - /:id</code></a
         >
       </li>
     </ul>
@@ -243,7 +231,7 @@
         <a class="up" href="#__Methods">Up</a>
         <pre
           class="post"
-        ><code class="huge"><span class="http-method">post</span> /register</code></pre>
+        ><code class="huge"><span class="http-method">post</span> /api/user/register</code></pre>
       </div>
       <div class="method-summary">
         Create user - WORKING (<span class="nickname">createUser</span>)
@@ -278,7 +266,7 @@
         <a class="up" href="#__Methods">Up</a>
         <pre
           class="post"
-        ><code class="huge"><span class="http-method">post</span> /login</code></pre>
+        ><code class="huge"><span class="http-method">post</span> /api/user/login</code></pre>
       </div>
       <div class="method-summary">
         Logs user into the system - WORKING (<span class="nickname"
@@ -313,7 +301,7 @@
         <a class="up" href="#__Methods">Up</a>
         <pre
           class="put"
-        ><code class="huge"><span class="http-method">put</span> /user/:id</code></pre>
+        ><code class="huge"><span class="http-method">put</span> /api/user/:id</code></pre>
       </div>
       <div class="method-summary">
         Edit user information (change username / password) - UNDER CONSTRUCTION
@@ -359,7 +347,7 @@
         <a class="up" href="#__Methods">Up</a>
         <pre
           class="delete"
-        ><code class="huge"><span class="http-method">delete</span> /user/:id</code></pre>
+        ><code class="huge"><span class="http-method">delete</span> /api/user/:id</code></pre>
       </div>
       <div class="method-summary">
         Delete account - UNDER CONSTRUCTION (<span class="nickname"
@@ -404,103 +392,35 @@
     </div>
     <!-- method -->
     <hr />
-    <div class="method">
-      <a name="getLikedSongs" />
-      <div class="method-path">
-        <a class="up" href="#__Methods">Up</a>
-        <pre
-          class="get"
-        ><code class="huge"><span class="http-method">get</span> /user/:id/songs</code></pre>
-      </div>
-      <div class="method-summary">
-        Get users liked songs - UNDER CONSTRUCTION (<span class="nickname"
-          >getLikedSongs</span
-        >)
-      </div>
-      <h3 class="field-label">Response body</h3>
-      <div class="field-items">
-        <pre class="example"><code>
-          {
-            {
-              "track_id": "<i>track_id</i>",
-              "track_name": "<i>track_name</i>",
-              "artist_name": "<i>artist_name</i>",
-            },
-            {...},
-            {...},
-            {...}
-          }
-        </code></pre>
-      </div>
 
-      <h3 class="field-label">Responses</h3>
-      <h4 class="field-label">200</h4>
-      successful operation
-      <a href="#"></a>
-      <h4 class="field-label">400</h4>
-      Invalid user id
-      <a href="#"></a>
-      <h4 class="field-label">404</h4>
-      Error
-      <a href="#"></a>
-    </div>
-    <!-- method -->
-    <hr />
-    <div class="method">
-      <a name="delSong" />
-      <div class="method-path">
-        <a class="up" href="#__Methods">Up</a>
-        <pre
-          class="delete"
-        ><code class="huge"><span class="http-method">delete</span> /user/:id/delsong/:id</code></pre>
-      </div>
-      <div class="method-summary">
-        Remove a favorited song - UNDER CONSTRUCTION (<span class="nickname"
-          >delSong</span
-        >)
-      </div>
-      <div class="method-notes"></div>
-
-      <!--Todo: process Response Object and its headers, schema, examples -->
-
-      <h3 class="field-label">Produces</h3>
-      This API call produces the following media types according to the
-      <span class="header">Accept</span> request header; the media type will be
-      conveyed by the <span class="header">Content-Type</span> response header.
-      <ul>
-        <li><code>application/xml</code></li>
-        <li><code>application/json</code></li>
-      </ul>
-
-      <h3 class="field-label">Responses</h3>
-      <h4 class="field-label">200</h4>
-      Successfully removed track: (track_name)
-      <a href="#"></a>
-      <h4 class="field-label">400</h4>
-      Cannot locate specified track
-      <a href="#"></a>
-      <h4 class="field-label">404</h4>
-      Error
-      <a href="#"></a>
-    </div>
     <div class="method-summary"></div>
-    <h4><p>SONGS ENDPOINTS:</p></h4>
+    <h4><p>SONGS ENDPOINTS - /api/songs/</p></h4>
     <ul>
       <li>
         <a href="#songs"
-          ><code><span class="http-method">get</span> /songs</code></a
+          ><code><span class="http-method">get</span> /</code></a
         >
       </li>
       <li>
         <a href="#likeSong"
-          ><code><span class="http-method">post</span> /songs/like</code></a
+          ><code><span class="http-method">post</span> /like</code></a
+        >
+      </li>
+      <li>
+        <a href="#getSongs"
+          ><code><span class="http-method">get</span> /:id/songs</code></a
+        >
+      </li>
+      <li>
+        <a href="#delSong"
+          ><code
+            ><span class="http-method">delete</span> /:id/likes/:track_id</code
+          ></a
         >
       </li>
       <li>
         <a href="#similarSongs"
-          ><code
-            ><span class="http-method">get</span> /songs/reccomended</code
-          ></a
+          ><code><span class="http-method">get</span> /reccomended</code></a
         >
       </li>
     </ul>
@@ -510,10 +430,10 @@
         <a class="up" href="#__Methods">Up</a>
         <pre
           class="get"
-        ><code class="huge"><span class="http-method">get</span> /songs</code></pre>
+        ><code class="huge"><span class="http-method">get</span> /api/songs</code></pre>
       </div>
       <div class="method-summary">
-        Get all songs - Working (<span class="nickname">getSongs</span>)
+        Get all songs - WORKING (<span class="nickname">getSongs</span>)
       </div>
       <div class="method-notes">
         This can only be done by the logged in user.
@@ -565,13 +485,15 @@
       successful operation - 200
       <a href="#"></a>
     </div>
+    <!-- method -->
+    <hr />
     <div class="method">
       <a name="likeSong" />
       <div class="method-path">
         <a class="up" href="#__Methods">Up</a>
         <pre
           class="post"
-        ><code class="huge"><span class="http-method">post</span> /songs/like</code></pre>
+        ><code class="huge"><span class="http-method">post</span> /api/songs/like</code></pre>
       </div>
       <div class="method-summary">
         Like song - UNDER CONSTRUCTION (<span class="nickname">likeSong</span>)
@@ -598,6 +520,85 @@
       <h3 class="field-label">Responses</h3>
       <h4 class="field-label">default</h4>
       successful operation - 200
+      <a href="#"></a>
+    </div>
+    <!-- method -->
+    <hr />
+    <div class="method">
+      <a name="getLikedSongs" />
+      <div class="method-path">
+        <a class="up" href="#__Methods">Up</a>
+        <pre
+          class="get"
+        ><code class="huge"><span class="http-method">get</span> /api/user/:id/likes</code></pre>
+      </div>
+      <div class="method-summary">
+        Get users liked songs - WORKING (<span class="nickname"
+          >getLikedSongs</span
+        >)
+      </div>
+      <h3 class="field-label">Response body</h3>
+      <div class="field-items">
+        <pre class="example"><code>
+          {
+            {
+              "track_id": "<i>track_id</i>",
+              "track_name": "<i>track_name</i>",
+              "artist_name": "<i>artist_name</i>",
+            },
+            {...},
+            {...},
+            {...}
+          }
+        </code></pre>
+      </div>
+
+      <h3 class="field-label">Responses</h3>
+      <h4 class="field-label">200</h4>
+      successful operation
+      <a href="#"></a>
+      <h4 class="field-label">400</h4>
+      Invalid user id
+      <a href="#"></a>
+      <h4 class="field-label">404</h4>
+      Error
+      <a href="#"></a>
+    </div>
+    <!-- method -->
+    <hr />
+    <div class="method">
+      <a name="delSong" />
+      <div class="method-path">
+        <a class="up" href="#__Methods">Up</a>
+        <pre
+          class="delete"
+        ><code class="huge"><span class="http-method">delete</span> /api/user/:id/likes/:track_id</code></pre>
+      </div>
+      <div class="method-summary">
+        Remove a liked song - WORKING (<span class="nickname">delSong</span>)
+      </div>
+      <div class="method-notes"></div>
+
+      <!--Todo: process Response Object and its headers, schema, examples -->
+
+      <h3 class="field-label">Produces</h3>
+      This API call produces the following media types according to the
+      <span class="header">Accept</span> request header; the media type will be
+      conveyed by the <span class="header">Content-Type</span> response header.
+      <ul>
+        <li><code>application/xml</code></li>
+        <li><code>application/json</code></li>
+      </ul>
+
+      <h3 class="field-label">Responses</h3>
+      <h4 class="field-label">200</h4>
+      Successfully removed track: (track_name)
+      <a href="#"></a>
+      <h4 class="field-label">400</h4>
+      Cannot locate specified track
+      <a href="#"></a>
+      <h4 class="field-label">404</h4>
+      Error
       <a href="#"></a>
     </div>
   </body>
