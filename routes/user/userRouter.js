@@ -5,7 +5,7 @@ const { restricted } = require("../../auth/restricted-middleware");
 const db = require("./userModel.js");
 
 // /user/register
-router.post("/register", (req, res, logger) => {
+router.post("/register", validateUser, (req, res, logger) => {
   let user = req.body;
   user.password = bcrypt.hashSync(user.password, 10);
   db.registerUser(user)
@@ -15,7 +15,6 @@ router.post("/register", (req, res, logger) => {
         id: user.id,
         name: user.name,
         email: user.email,
-        token: token,
       });
     })
     .catch((err) => {
@@ -24,7 +23,7 @@ router.post("/register", (req, res, logger) => {
     });
 });
 // /user/login
-router.post("/login", (req, res) => {
+router.post("/login", validateUser, (req, res) => {
   const { email, password } = req.body;
   db.findByEmail({ email })
     .first()
@@ -44,6 +43,16 @@ router.post("/login", (req, res) => {
       res.status(404).json(error);
     });
 });
+
+function validateUser(request, response, next) {
+  if (!request.body.email) {
+    response.status(404).json({ message: "!: Email missing from body" });
+  } else if (!request.body.password) {
+    response.status(404).json({ message: "!: Password missing from body" });
+  } else {
+    next();
+  }
+}
 
 function generateToken(user) {
   const payload = {
