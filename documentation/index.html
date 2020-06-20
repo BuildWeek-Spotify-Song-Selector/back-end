@@ -204,34 +204,37 @@
     <ul>
       <li>
         <a href="#createUser"
-          ><code><span class="http-method">post</span> /register</code></a
+          ><code><span class="http-method">post</span> /api/register</code></a
         >
       </li>
       <li>
         <a href="#loginUser"
-          ><code><span class="http-method">post</span> /login</code></a
+          ><code><span class="http-method">post</span> /api/login</code></a
         >
       </li>
       <li>
         <a href="#getSongs"
-          ><code><span class="http-method">get</span> /user/:id/songs</code></a
+          ><code
+            ><span class="http-method">get</span> /api/user/:id/songs</code
+          ></a
         >
       </li>
       <li>
         <a href="#delSong"
           ><code
-            ><span class="http-method">delete</span> /user/:id/delsong/:id</code
+            ><span class="http-method">delete</span>
+            /api/user/:id/delsong/:id</code
           ></a
         >
       </li>
       <li>
         <a href="#getUserByName"
-          ><code><span class="http-method">put</span> /user/:id</code></a
+          ><code><span class="http-method">put</span> /api/user/:id</code></a
         >
       </li>
       <li>
         <a href="#deleteUser"
-          ><code><span class="http-method">delete</span> /user/:id</code></a
+          ><code><span class="http-method">delete</span> /api/user/:id</code></a
         >
       </li>
     </ul>
@@ -243,7 +246,7 @@
         <a class="up" href="#__Methods">Up</a>
         <pre
           class="post"
-        ><code class="huge"><span class="http-method">post</span> /register</code></pre>
+        ><code class="huge"><span class="http-method">post</span> /api/register</code></pre>
       </div>
       <div class="method-summary">
         Create user - WORKING (<span class="nickname">createUser</span>)
@@ -278,7 +281,7 @@
         <a class="up" href="#__Methods">Up</a>
         <pre
           class="post"
-        ><code class="huge"><span class="http-method">post</span> /login</code></pre>
+        ><code class="huge"><span class="http-method">post</span> /api/login</code></pre>
       </div>
       <div class="method-summary">
         Logs user into the system - WORKING (<span class="nickname"
@@ -313,7 +316,7 @@
         <a class="up" href="#__Methods">Up</a>
         <pre
           class="put"
-        ><code class="huge"><span class="http-method">put</span> /user/:id</code></pre>
+        ><code class="huge"><span class="http-method">put</span> /api/user/:id</code></pre>
       </div>
       <div class="method-summary">
         Edit user information (change username / password) - UNDER CONSTRUCTION
@@ -359,7 +362,7 @@
         <a class="up" href="#__Methods">Up</a>
         <pre
           class="delete"
-        ><code class="huge"><span class="http-method">delete</span> /user/:id</code></pre>
+        ><code class="huge"><span class="http-method">delete</span> /api/user/:id</code></pre>
       </div>
       <div class="method-summary">
         Delete account - UNDER CONSTRUCTION (<span class="nickname"
@@ -452,7 +455,7 @@
         <a class="up" href="#__Methods">Up</a>
         <pre
           class="delete"
-        ><code class="huge"><span class="http-method">delete</span> /user/:id/delsong/:id</code></pre>
+        ><code class="huge"><span class="http-method">delete</span> /api/user/:id/delsong/:id</code></pre>
       </div>
       <div class="method-summary">
         Remove a favorited song - UNDER CONSTRUCTION (<span class="nickname"
@@ -488,18 +491,18 @@
     <ul>
       <li>
         <a href="#songs"
-          ><code><span class="http-method">get</span> /songs</code></a
+          ><code><span class="http-method">get</span> /api/songs</code></a
         >
       </li>
       <li>
         <a href="#likeSong"
-          ><code><span class="http-method">post</span> /songs/like</code></a
+          ><code><span class="http-method">post</span> /api/songs/like</code></a
         >
       </li>
       <li>
         <a href="#similarSongs"
           ><code
-            ><span class="http-method">get</span> /songs/reccomended</code
+            ><span class="http-method">get</span> /api/songs/reccomended</code
           ></a
         >
       </li>
@@ -510,7 +513,7 @@
         <a class="up" href="#__Methods">Up</a>
         <pre
           class="get"
-        ><code class="huge"><span class="http-method">get</span> /songs</code></pre>
+        ><code class="huge"><span class="http-method">get</span> /api/songs</code></pre>
       </div>
       <div class="method-summary">
         Get all songs - Working (<span class="nickname">getSongs</span>)
@@ -571,7 +574,7 @@
         <a class="up" href="#__Methods">Up</a>
         <pre
           class="post"
-        ><code class="huge"><span class="http-method">post</span> /songs/like</code></pre>
+        ><code class="huge"><span class="http-method">post</span> /api/songs/like</code></pre>
       </div>
       <div class="method-summary">
         Like song - UNDER CONSTRUCTION (<span class="nickname">likeSong</span>)
