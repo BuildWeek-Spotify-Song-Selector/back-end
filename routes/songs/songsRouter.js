@@ -10,16 +10,28 @@ module.exports = router;
 
 // get songs
 router.get("/", restricted, (req, res) => {
-  db.getSongs()
-    .then((songs) => {
-      res.json(songs);
+  axios
+    .get(`http://www.last.fm/music/Kanye+West`)
+    .then((resp) => {
+      res.json(resp);
+      db.getSongs()
+        .then((songs) => {
+          res.json(songs);
+        })
+        .catch((error) => {
+          console.log(error);
+          res.status(500).json({
+            error: "Error retrieving songs, could not connect to database.",
+          });
+        });
     })
-    .catch((error) => {
-      console.log(error);
-      res.status(500).json({
-        error: "Error retrieving songs, could not connect to database.",
-      });
-    });
+    .catch((err) =>
+      res
+        .status(500)
+        .json({
+          error: "Error: Unable to retrieve songs or user not signed in.",
+        })
+    );
 });
 
 // like song
@@ -71,3 +83,5 @@ router.delete("/:id/likes/:track_id", restricted, (req, res) => {
     });
   }
 });
+
+//get similar songs

@@ -8,9 +8,9 @@ module.exports = {
   editUser,
 };
 
-function registerUser(account) {
+function registerUser(user) {
   return db("users")
-    .insert(account)
+    .insert(user)
     .returning("id")
     .then((ids) => findById(ids[0]));
 }
@@ -27,6 +27,6 @@ function deleteUser(id) {
   return db("users").where({ id }).del();
 }
 
-function editUser(id, accountInfo) {
-  return db("users").where({ id }).update(accountInfo);
+function editUser(id, userInfo) {
+  return db("users").where({ id }).update(userInfo);
 }

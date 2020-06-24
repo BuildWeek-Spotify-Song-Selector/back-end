@@ -6,7 +6,7 @@ module.exports = {
   getLikedSongs,
   likeSong,
   deleteFromLikes,
-  putSongToAccount,
+  putSongToUser,
 };
 
 function getSongs(songs) {
@@ -29,11 +29,11 @@ function likeSong(song, user_id, track_id) {
     .insert(song)
     .returning("id")
     .then((ids) => {
-      return putSongToAccount(song, user_id, track_id);
+      return putSongToUser(song, user_id, track_id);
     });
 }
 
-function putSongToAccount(song, user_id, track_id) {
+function putSongToUser(song, user_id, track_id) {
   const inject = {
     user_id: user_id,
     song: song_id,
