@@ -11,6 +11,7 @@ exports.seed = function (knex) {
           track_name: "Acoustic",
           genre: "acoustic",
         },
+
         {
           track_id: "3CwJI2rcnyZL0DVaUZ2D99",
           artist_name: "DJ Flex",

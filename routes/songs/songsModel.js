@@ -9,8 +9,22 @@ module.exports = {
   putSongToUser,
 };
 
-function getSongs(songs) {
-  return db("songs");
+function getSongs(name, artist, track_id, genre) {
+  const inject = {
+    track_id: track_id,
+    track_name: name,
+    artist_name: artist,
+    genre: genre,
+  };
+  return db("songs")
+    .truncate()
+    .then((songs) => {
+      return db("songs")
+        .insert(inject)
+        .then((songs) => {
+          return db("songs");
+        });
+    });
 }
 
 function getLikedSongs(id) {

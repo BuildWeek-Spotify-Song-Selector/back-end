@@ -2,6 +2,7 @@ const router = require("express").Router();
 const axios = require("axios");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const util = require("util");
 const { restricted } = require("../../auth/restricted-middleware");
 
 const db = require("./songsModel.js");
@@ -11,26 +12,54 @@ module.exports = router;
 // get songs
 router.get("/", restricted, (req, res) => {
   axios
-    .get(`http://www.last.fm/music/Kanye+West`)
+    .get(
+      `http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key=f86920dcdd8e8d0768e5e9044125dafa&format=json`
+    )
     .then((resp) => {
-      res.json(resp);
-      db.getSongs()
-        .then((songs) => {
-          res.json(songs);
+      const songList = resp.data.tracks.track;
+      for (var i = 0; i < songList.length; i++) {
+        for (var key in songList[i]) {
+          if (songList[i].hasOwnProperty(key)) {
+            if (key !== "name" && key !== "artist") {
+              delete songList[i][key];
+              delete songList[i].artist.mbid;
+              delete songList[i].artist.url;
+            }
+          }
+        }
+      }
+
+      var formattedSongList = songList.map(
+        ({ name: track_name, artist: artist_name }) => ({
+          track_name,
+          artist_name: artist_name.name,
+          track_id: "TEST ID",
+          genre: "rock",
         })
-        .catch((error) => {
-          console.log(error);
-          res.status(500).json({
-            error: "Error retrieving songs, could not connect to database.",
+      );
+
+      for (var i = 0; i < formattedSongList.length; i++) {
+        db.getSongs(
+          formattedSongList[i].track_name,
+          formattedSongList[i].artist_name,
+          formattedSongList[i].track_id,
+          formattedSongList[i].genre
+        )
+          .then((songs) => {
+            res.json(songs);
+          })
+          .catch((error) => {
+            console.log(error);
+            res.status(500).json({
+              error: "Error retrieving songs, could not connect to database.",
+            });
           });
-        });
+      }
     })
     .catch((err) =>
-      res
-        .status(500)
-        .json({
-          error: "Error: Unable to retrieve songs or user not signed in.",
-        })
+      res.status(500).json({
+        error: "Error: Unable to retrieve songs or user not signed in.",
+      })
     );
 });
 
