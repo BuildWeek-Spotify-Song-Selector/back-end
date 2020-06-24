@@ -43,7 +43,7 @@ exports.up = function (knex) {
         .onDelete("cascade");
       tbl.string("track_id").notNullable();
       tbl.string("track_name");
-      tbl.string("artist_name");
+      tbl.string("artist_name";
     });
 };
 

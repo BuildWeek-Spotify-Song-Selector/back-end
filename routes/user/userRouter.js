@@ -36,7 +36,7 @@ router.post("/login", validateUser, (req, res) => {
           token: token,
         });
       } else {
-        res.status(401).json({ message: "Invalid username or password." });
+        res.status(401).json({ message: "Invalid username or password" });
       }
     })
     .catch((error) => {
@@ -44,12 +44,43 @@ router.post("/login", validateUser, (req, res) => {
     });
 });
 
+//edit user info
+router.put("/:id", restricted, (req, res) => {
+  const id = req.params.id;
+  const userInfo = req.body;
+  if (id) {
+    db.editUser(id, userInfo)
+      .then(() =>
+        res.status(200).json({ message: "Successfully updated user info" })
+      )
+      .catch((err) => console.log(err));
+  } else {
+    return res.status(403).json({
+      message: "Please log in to edit user info",
+    });
+  }
+});
+
+// delete user
+router.delete("/:id", restricted, (req, res) => {
+  const id = req.params.id;
+  if (id == req.user.id) {
+    db.deleteUser(id)
+      .then(() => res.json({ message: "User has been deleted" }))
+      .catch((err) => console.log(err));
+  } else {
+    return res.status(403).json({
+      message: "Please log in to delete your account.",
+    });
+  }
+});
+
 // middlewares
 function validateUser(request, response, next) {
   if (!request.body.email) {
-    response.status(404).json({ message: "!: Email missing from body" });
+    response.status(404).json({ message: "Email missing from body" });
   } else if (!request.body.password) {
-    response.status(404).json({ message: "!: Password missing from body" });
+    response.status(404).json({ message: "Password missing from body" });
   } else {
     next();
   }
