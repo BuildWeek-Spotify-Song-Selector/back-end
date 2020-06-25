@@ -11,16 +11,9 @@ server.use(express.json());
 server.use(cors());
 server.use(helmet());
 
-server.use("/", logger, express.static(__dirname + "/documentation"));
+server.use("/", express.static(__dirname + "/documentation"));
 
-server.use("/api/user", logger, userRouter);
-server.use("/api/songs", logger, songsRouter);
-
-function logger(req, res, next) {
-  const today = new Date().toISOString(); // YYYY-MM-DD
-  console.log(`[${today}] ${req.method} to ${req.originalUrl}`);
-
-  next();
-}
+server.use("/api/user", userRouter);
+server.use("/api/songs", songsRouter);
 
 module.exports = server;

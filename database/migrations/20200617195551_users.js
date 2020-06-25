@@ -20,7 +20,7 @@ exports.up = function (knex) {
       tbl.decimal("key", 10);
       tbl.decimal("liveness", 10);
       tbl.decimal("loudness", 10);
-      tbl.boolean("mode");
+      tbl.boolean("mode", 10);
       tbl.decimal("speechiness", 10);
       tbl.decimal("tempo", 10);
       tbl.decimal("time_signature", 10);

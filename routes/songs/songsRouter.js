@@ -29,11 +29,21 @@ router.get("/", restricted, (req, res) => {
         }
       }
 
+      function getRandomID(length, chars) {
+        var result = "";
+        for (var i = length; i > 0; --i)
+          result += chars[Math.floor(Math.random() * chars.length)];
+        return result;
+      }
+
       var formattedSongList = songList.map(
         ({ name: track_name, artist: artist_name }) => ({
           track_name,
           artist_name: artist_name.name,
-          track_id: "TEST ID",
+          track_id: getRandomID(
+            27,
+            "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+          ),
           genre: "rock",
         })
       );
@@ -64,24 +74,16 @@ router.get("/", restricted, (req, res) => {
 });
 
 // like song
-// router.post("/like/:id", restricted, (req, res) => {
-//   const track_id = req.body.track_id;
-//   const user_id = req.user.id;
-//   axios
-//     .get(`temp.url.gov`)
-//     .then((resp) => {
-//       db.likeSong(resp.data.seed, user_id, track_id)
-//         .then(() => {
-//           res.status(201).json({ message: "Successfully liked song!" });
-//         })
-//         .catch((err) => console.log(err));
-//     })
-//     .catch((err) =>
-//       res
-//         .status(500)
-//         .json({ error: "Error: Unable to find song or user not signed in." })
-//     );
-// });
+router.post("/like/:id", restricted, (req, res) => {
+  const track_id = req.body.track_id;
+  const user_id = req.user.id;
+  const song = req.body.track_id;
+  db.likeSong(song, user_id, track_id)
+    .then(() => {
+      res.status(201).json({ message: "Successfully liked song!" });
+    })
+    .catch((err) => console.log(err));
+});
 
 // get liked songs
 router.get("/:id/likes", restricted, (req, res) => {
@@ -114,3 +116,14 @@ router.delete("/:id/likes/:track_id", restricted, (req, res) => {
 });
 
 //get similar songs
+router.post("/similar", (req, res) => {
+  const track_id = req.body.track_id;
+  const number_like = req.body.number_like;
+  axios
+    .get(`DS endpoint`)
+    .then((resp) => {
+      const song = resp.data;
+      return res.status(200).json(song);
+    })
+    .catch((err) => res.status(500).json({ error: err }));
+});

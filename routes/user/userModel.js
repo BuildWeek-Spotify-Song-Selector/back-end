@@ -11,7 +11,6 @@ module.exports = {
 function registerUser(user) {
   return db("users")
     .insert(user)
-    .returning("id")
     .then((ids) => findById(ids[0]));
 }
 
@@ -27,6 +26,11 @@ function deleteUser(id) {
   return db("users").where({ id }).del();
 }
 
-function editUser(id, userInfo) {
+function editUser(id, userName, userEmail, userPassword) {
+  const userInfo = {
+    name: userName,
+    email: userEmail,
+    password: userPassword,
+  };
   return db("users").where({ id }).update(userInfo);
 }
