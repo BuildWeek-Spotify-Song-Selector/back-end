@@ -75,9 +75,9 @@ router.get("/", restricted, (req, res) => {
 
 // like song
 router.post("/like/:id", restricted, (req, res) => {
-  const track_id = req.body.track_id;
   const user_id = req.user.id;
-  const song = req.body.track_id;
+  const song = req.body.id;
+  const track_id = req.body.track_id;
   db.likeSong(song, user_id, track_id)
     .then(() => {
       res.status(201).json({ message: "Successfully liked song!" });

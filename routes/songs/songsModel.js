@@ -40,8 +40,8 @@ function findById(id) {
 
 function likeSong(song, user_id, track_id) {
   return db("songs")
-    .insert(song)
-    .returning("id")
+    .select()
+    .where({ id: song })
     .then((ids) => {
       return putSongToUser(song, user_id, track_id);
     });
@@ -50,10 +50,10 @@ function likeSong(song, user_id, track_id) {
 function putSongToUser(song, user_id, track_id) {
   const inject = {
     user_id: user_id,
-    song: song_id,
+    song_id: song,
     track_id: track_id,
   };
-  return db("user_songs").insert(inject).returning("user_id");
+  return db("user_songs").insert(inject);
 }
 
 function deleteFromLikes(user_id, track_id) {
