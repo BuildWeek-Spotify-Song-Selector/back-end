@@ -9,7 +9,7 @@
   "scripts": {
     "server": "nodemon index.js",
     "start": "NODE_ENV=production node index.js",
-    "test": "cross-env DB_ENV=testing jest --watch"
+    "test": "cross-env DB_ENV=development jest --watch"
   },
   "repository": {
     "type": "git",

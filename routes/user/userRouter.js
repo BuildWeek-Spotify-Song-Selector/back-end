@@ -47,10 +47,12 @@ router.post("/login", validateUser, (req, res) => {
 //edit user info
 router.put("/:id", restricted, (req, res) => {
   const id = req.params.id;
-  const userInfo = req.body;
+  const userName = req.body.name;
+  const userEmail = req.body.email;
+  const userPassword = bcrypt.hashSync(req.body.password, 10);
   if (id) {
-    db.editUser(id, userInfo)
-      .then(() =>
+    db.editUser(id, userName, userEmail, userPassword)
+      .then((user) =>
         res.status(200).json({ message: "Successfully updated user info" })
       )
       .catch((err) => console.log(err));
