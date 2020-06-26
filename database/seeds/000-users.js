@@ -8,7 +8,7 @@ exports.seed = function (knex) {
         {
           id: 1,
           name: "user1",
-          email: "user2@gmail.com",
+          email: "user1@gmail.com",
           password:
             "$2a$10$52twA0.mdakCADff/cepy.2BYltueuon9VSYSRXjFsv4mSh/wr1DO",
         },

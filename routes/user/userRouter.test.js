@@ -3,23 +3,20 @@ const express = require("express");
 const server = require("../../server");
 const db = require("../../database/dbConfig");
 
-const {
-  registerUser,
-  findById,
-  findByEmail,
-  deleteUser,
-  editUser,
-} = require("./userModel.js");
+require("dotenv").config();
 
-describe("user endpoints", () => {
+describe("user endpoints", function () {
+  const OLD_ENV = process.env;
   beforeEach(async () => {
     await db("users").truncate();
+    jest.resetModules();
+    process.env = { ...OLD_ENV };
+    delete process.env.NODE_ENV;
   });
 
   describe("Registration", () => {
-    it("should give back the created user name", async () => {
-      return await request(server);
-      request(server)
+    it("should give back the created user name", function () {
+      return request(server)
         .post("/api/user/register")
         .send({
           name: "AustinTest",
@@ -27,27 +24,21 @@ describe("user endpoints", () => {
           password: "password123",
         })
         .then((res) => {
-          expect(res.body.name).toBe(name);
-        })
-        .catch((err) => {
-          console.log("Secondary error during teardown.");
+          expect(res.body.name).toBe("AustinTest");
         });
+    });
 
-      it("should return status 201", async () => {
-        return await request(server);
-        request(server)
-          .post("/api/user/register")
-          .send({
-            name: "AustinTest1",
-            email: "testemail@gmail.com",
-            password: "password123",
-          })
-          .end((err, res) => {
-            if (err) return done(err);
-            expect(res.status).toBe(201);
-            done();
-          });
-      });
+    it("should return status 201", function () {
+      return request(server)
+        .post("/api/user/register")
+        .send({
+          name: "AustinTest",
+          email: "testemail@gmail.com",
+          password: "password123",
+        })
+        .then((res) => {
+          expect(res.status).toBe(201);
+        });
     });
   });
 
@@ -56,9 +47,13 @@ describe("user endpoints", () => {
       email: "testemail@gmail.com",
       password: "password123",
     };
-    it("should give back the user name", async () => {
-      return await request(server);
-      request(server)
+    it("should give back the user name", function () {
+      return request(server).post("/api/user/register").send({
+        name: "AustinTest",
+        email: "testemail@gmail.com",
+        password: "password123",
+      });
+      return request(server)
         .post("/api/user/login")
         .set("Accept", "application/json")
         .send(data)
@@ -66,22 +61,30 @@ describe("user endpoints", () => {
           expect(res.body.message).toBe(`Success, Welcome AustinTest`)
         );
     });
-    it("return status 200", async () => {
-      return await request(server);
-      request(server)
+    it("return status 200", () => {
+      return request(server).post("/api/user/register").send({
+        name: "AustinTest",
+        email: "testemail@gmail.com",
+        password: "password123",
+      });
+      return request(server)
         .post("/api/user/login")
         .set("Accept", "application/json")
         .send(data)
         .then((res) => expect(res.status).toBe(200));
     });
-    it("should return token on login", async () => {
-      return await request(server);
+    it("should return token on login", function () {
       let token;
-      request(server)
+      return request(server).post("/api/user/register").send({
+        name: "AustinTest",
+        email: "testemail@gmail.com",
+        password: "password123",
+      });
+      return request(server)
         .post("/api/user/login")
         .send({
-          username: "user1@gmail.com",
-          password: "testpwd",
+          username: "testemail@gmail.com",
+          password: "password123",
         })
         .then((res) => expect(res.body).arrayContaining(token));
     });

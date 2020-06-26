@@ -10,74 +10,100 @@ const db = require("./songsModel.js");
 module.exports = router;
 
 // get songs
+// router.get("/", restricted, (req, res) => {
+// axios
+//   .get(
+//     `http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key=f86920dcdd8e8d0768e5e9044125dafa&format=json`
+//   )
+//   .then((resp) => {
+// const songList = resp.data.tracks.track;
+// for (var i = 0; i < songList.length; i++) {
+//   for (var key in songList[i]) {
+//     if (songList[i].hasOwnProperty(key)) {
+//       if (key !== "name" && key !== "artist") {
+//         delete songList[i][key];
+//         delete songList[i].artist.mbid;
+//         delete songList[i].artist.url;
+//       }
+//     }
+//   }
+// }
+// function getRandomID(length, chars) {
+//   var result = "";
+//   for (var i = length; i > 0; --i)
+//     result += chars[Math.floor(Math.random() * chars.length)];
+//   return result;
+// }
+// function randomGenre() {
+//   var genreArray = ["rock", "pop", "rap", "classical"];
+//   var randomNumber = Math.floor(Math.random() * genreArray.length);
+//   var randomGenre = genreArray[randomNumber];
+//   return randomGenre;
+// }
+// var formattedSongList = songList.map(
+//   ({ name: track_name, artist: artist_name }) => ({
+//     track_name,
+//     artist_name: artist_name.name,
+//     track_id: getRandomID(
+//       27,
+//       "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+//     ),
+//     genre: randomGenre(),
+//     acousticness: Math.random().toFixed(1),
+//     danceability: Math.random().toFixed(1),
+//     duration_ms: Math.random().toFixed(1),
+//     energy: Math.random().toFixed(1),
+//     instrumentalness: Math.random().toFixed(1),
+//     key: Math.random().toFixed(1),
+//     liveness: Math.random().toFixed(1),
+//     loudness: Math.random().toFixed(1),
+//     mode: true,
+//     speechiness: Math.random().toFixed(1),
+//     tempo: Math.random().toFixed(1),
+//     time_signature: Math.random().toFixed(1),
+//     valence: Math.random().toFixed(1),
+//     popularity: Math.random().toFixed(1),
+//   })
+// );
+// for (var i = 0; i < formattedSongList.length; i++) {
+//   db.getSongs()
+//     .then((songs) => {
+//       res.json(songs);
+//     })
+//     .catch((error) => {
+//       console.log(error);
+//       res.status(500).json({
+//         error: "Error retrieving songs, could not connect to database.",
+//       });
+//     });
+//   // }
+// })
+// .catch((err) =>
+//   res.status(500).json({
+//     error: "Error: Unable to retrieve songs or user not signed in.",
+//   })
+// );
+// });
+
+// dummy data get songs
 router.get("/", restricted, (req, res) => {
-  axios
-    .get(
-      `http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key=f86920dcdd8e8d0768e5e9044125dafa&format=json`
-    )
-    .then((resp) => {
-      const songList = resp.data.tracks.track;
-      for (var i = 0; i < songList.length; i++) {
-        for (var key in songList[i]) {
-          if (songList[i].hasOwnProperty(key)) {
-            if (key !== "name" && key !== "artist") {
-              delete songList[i][key];
-              delete songList[i].artist.mbid;
-              delete songList[i].artist.url;
-            }
-          }
-        }
-      }
-
-      function getRandomID(length, chars) {
-        var result = "";
-        for (var i = length; i > 0; --i)
-          result += chars[Math.floor(Math.random() * chars.length)];
-        return result;
-      }
-
-      var formattedSongList = songList.map(
-        ({ name: track_name, artist: artist_name }) => ({
-          track_name,
-          artist_name: artist_name.name,
-          track_id: getRandomID(
-            27,
-            "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-          ),
-          genre: "rock",
-        })
-      );
-
-      for (var i = 0; i < formattedSongList.length; i++) {
-        db.getSongs(
-          formattedSongList[i].track_name,
-          formattedSongList[i].artist_name,
-          formattedSongList[i].track_id,
-          formattedSongList[i].genre
-        )
-          .then((songs) => {
-            res.json(songs);
-          })
-          .catch((error) => {
-            console.log(error);
-            res.status(500).json({
-              error: "Error retrieving songs, could not connect to database.",
-            });
-          });
-      }
+  db.getSongs()
+    .then((songs) => {
+      res.json(songs);
     })
-    .catch((err) =>
+    .catch((error) => {
+      console.log(error);
       res.status(500).json({
-        error: "Error: Unable to retrieve songs or user not signed in.",
-      })
-    );
+        error: "Error retrieving songs, could not connect to database.",
+      });
+    });
 });
 
 // like song
-router.post("/like/:id", restricted, (req, res) => {
-  const track_id = req.body.track_id;
+router.post("/like", restricted, (req, res) => {
   const user_id = req.user.id;
-  const song = req.body.track_id;
+  const song = req.body.id;
+  const track_id = req.body.track_id;
   db.likeSong(song, user_id, track_id)
     .then(() => {
       res.status(201).json({ message: "Successfully liked song!" });
@@ -96,12 +122,12 @@ router.get("/:id/likes", restricted, (req, res) => {
 });
 
 // delete liked song
-router.delete("/:id/likes/:track_id", restricted, (req, res) => {
+router.delete("/:id/likes/:song_id", restricted, (req, res) => {
   const id = req.params.id;
-  const track_id = req.params.track_id;
+  const song = req.params.song_id;
   console.log(req.user.id);
   if (id == req.user.id) {
-    db.deleteFromLikes(id, track_id)
+    db.deleteFromLikes(id, song)
       .then(() =>
         res
           .status(200)
