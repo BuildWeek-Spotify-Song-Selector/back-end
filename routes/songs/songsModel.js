@@ -9,22 +9,8 @@ module.exports = {
   putSongToUser,
 };
 
-function getSongs(name, artist, track_id, genre) {
-  const inject = {
-    track_id: track_id,
-    track_name: name,
-    artist_name: artist,
-    genre: genre,
-  };
-  return db("songs")
-    .truncate()
-    .then((songs) => {
-      return db("songs")
-        .insert(inject)
-        .then((songs) => {
-          return db("songs");
-        });
-    });
+function getSongs() {
+  return db("songs");
 }
 
 function getLikedSongs(id) {
@@ -49,17 +35,17 @@ function likeSong(song, user_id, track_id) {
 
 function putSongToUser(song, user_id, track_id) {
   const inject = {
-    user_id: user_id,
     song_id: song,
+    user_id: user_id,
     track_id: track_id,
   };
   return db("user_songs").insert(inject);
 }
 
-function deleteFromLikes(user_id, track_id) {
+function deleteFromLikes(user_id, song) {
   return db("user_songs")
     .select()
-    .where({ user_id, track_id: track_id })
+    .where({ user_id, song_id: song })
     .limit(1)
     .first()
     .del();
